@@ -38,7 +38,7 @@ export const MONTH_THEMES = {
   3: {
     name: "April",
     season: "Spring",
-    image: "https://images.unsplash.com/photo-1490750967868-88df5691cc9c?w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1586709599895-27392e1a0a7a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXByaWx8ZW58MHx8MHx8fDA%3D?w=1200&q=80",
     accent: "#FFB347",
     gradient: "linear-gradient(135deg, #1f1a00 0%, #2e2800 50%, #3d3500 100%)",
     cardBg: "#1a1500",
