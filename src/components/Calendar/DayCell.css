@@ -1,0 +1,211 @@
+/* src/components/Calendar/DayCell.css */
+
+.day-cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: transform 0.12s ease, background 0.12s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+}
+
+.day-cell:hover:not(.day-cell--outside):not(.day-cell--start):not(.day-cell--end) {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.07);
+  z-index: 2;
+}
+
+.day-cell--outside {
+  opacity: 0.15;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ── Day Number ── */
+.day-cell__number {
+  font-family: 'DM Mono', 'Courier New', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  position: relative;
+  z-index: 2;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+/* Weekend */
+.day-cell--weekend .day-cell__number {
+  color: var(--accent);
+}
+
+/* ── Today ── */
+.day-cell--today {
+  background: rgba(255, 255, 255, 0.06);
+}
+.day-cell--today .day-cell__number {
+  color: #fff;
+  font-weight: 700;
+}
+.day-cell__today-ring {
+  position: absolute;
+  inset: 4px;
+  border-radius: 8px;
+  border: 1.5px solid var(--accent);
+  opacity: 0.65;
+  animation: todayPulse 2.4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+@keyframes todayPulse {
+  0%, 100% { opacity: 0.65; transform: scale(1); }
+  50%       { opacity: 0.3;  transform: scale(1.06); }
+}
+
+/* ── Range Strip ── */
+.day-cell__range-bar {
+  position: absolute;
+  top: 9px;
+  bottom: 9px;
+  left: 0;
+  right: 0;
+  background: var(--accent-soft);
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 0;
+}
+
+/* ── Start Date ── */
+.day-cell--start {
+  z-index: 3;
+}
+.day-cell--start::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: var(--accent);
+  border-radius: 9px;
+  z-index: 1;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent),
+    0 0 18px color-mix(in srgb, var(--accent) 50%, transparent);
+  animation: glowPulse 2s ease-in-out infinite;
+}
+.day-cell--start .day-cell__number {
+  color: #000;
+  font-weight: 800;
+  mix-blend-mode: multiply;
+}
+.day-cell--start .day-cell__range-bar {
+  left: 50%;
+  border-radius: 0;
+}
+
+/* ── End Date ── */
+.day-cell--end {
+  z-index: 3;
+}
+.day-cell--end::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: var(--accent);
+  border-radius: 9px;
+  z-index: 1;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent),
+    0 0 18px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.day-cell--end .day-cell__number {
+  color: #000;
+  font-weight: 800;
+  mix-blend-mode: multiply;
+}
+.day-cell--end .day-cell__range-bar {
+  right: 50%;
+  border-radius: 0;
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent), 0 0 18px color-mix(in srgb, var(--accent) 50%, transparent); }
+  50%       { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent), 0 0 26px color-mix(in srgb, var(--accent) 65%, transparent); }
+}
+
+/* ── In Range ── */
+.day-cell--in-range {
+  border-radius: 0;
+}
+.day-cell--in-range .day-cell__number {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* ── Active (editing) ── */
+.day-cell--active::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 9px;
+  border: 1.5px dashed var(--accent);
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* ── Focused (keyboard) ── */
+.day-cell--focused {
+  background: rgba(255, 255, 255, 0.09);
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ── Note Dot ── */
+.day-cell__note-dot {
+  position: absolute;
+  bottom: 4px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  z-index: 4;
+  box-shadow: 0 0 5px currentColor;
+}
+
+/* ── Holiday ── */
+.day-cell--holiday .day-cell__number {
+  color: #FFD591;
+}
+.day-cell__holiday-tip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: rgba(10, 10, 20, 0.95);
+  color: #fff;
+  font-size: 10px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  z-index: 100;
+  pointer-events: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.day-cell--holiday:hover .day-cell__holiday-tip {
+  display: block;
+  animation: tipIn 0.15s ease forwards;
+}
+@keyframes tipIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(4px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .day-cell { height: 66px; }
+  .day-cell__number { font-size: 12px; }
+}
